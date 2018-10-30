@@ -15,7 +15,7 @@ namespace RobotCtrl
 
     /// <summary>
     /// Mit Hilfe diese Klasse kann auf die 4 Eingänge (Schalter) des Roboters zugegeriffen werden.
-    /// </summary>
+    /// </summary   >
     public class DigitalIn : IDisposable
     {
         #region members

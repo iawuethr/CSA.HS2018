@@ -6,7 +6,6 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.MainMenu mainMenu1;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,15 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainMenu1 = new System.Windows.Forms.MainMenu();
-            this.Menu = this.mainMenu1;
-            this.components = new System.ComponentModel.Container();
+            this.consoleView1 = new RobotView.ConsoleView();
+            this.SuspendLayout();
+            // 
+            // consoleView1
+            // 
+            this.consoleView1.BackColor = System.Drawing.Color.Black;
+            this.consoleView1.Location = new System.Drawing.Point(3, 3);
+            this.consoleView1.Name = "consoleView1";
+            this.consoleView1.Size = new System.Drawing.Size(105, 105);
+            this.consoleView1.TabIndex = 1;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Text = "Form1";
             this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(638, 455);
+            this.Controls.Add(this.consoleView1);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+        private RobotView.ConsoleView consoleView1;
     }
 }
 

@@ -29,7 +29,7 @@ namespace RobotView
             }
         }
 
-        private void setLED(RobotCtrl.Led led)
+        public void setLED(RobotCtrl.Led led)
         {
             this.LED = led;
             led.LedStateChanged += Led_LedStateChanged;

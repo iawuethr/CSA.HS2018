@@ -33,7 +33,7 @@ namespace RobotView
             }
         }
 
-        private void setSwitch(RobotCtrl.Switch rswitch)
+        public void setSwitch(RobotCtrl.Switch rswitch)
         {
             this.rswitch = rswitch;
             rswitch.SwitchStateChanged += Rswitch_SwitchStateChanged;
