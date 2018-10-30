@@ -120,7 +120,7 @@ namespace RobotCtrl
             {
                 newData = this.Data;
                 if (newData != oldData) {
-                    this.DigitalInChanged(this, new EventArgs());
+                   this.OnDigitalInChanged(new EventArgs());
                 }
                 oldData = this.Data;
                 Thread.Sleep(50);
