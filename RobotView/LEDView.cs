@@ -37,7 +37,14 @@ namespace RobotView
 
         private void Led_LedStateChanged(object sender, RobotCtrl.LedEventArgs e)
         {
-            this.setLEDState(e.LedEnabled ? LEDState.ON : LEDState.OFF);
+            if (InvokeRequired)
+            {
+                Invoke(new EventHandler<RobotCtrl.LedEventArgs>(Led_LedStateChanged), sender, e);
+            }
+            else
+            {
+                this.setLEDState(e.LedEnabled ? LEDState.ON : LEDState.OFF);
+            }
         }
 
         private LEDState getLEDState()

@@ -41,7 +41,15 @@ namespace RobotView
 
         private void Rswitch_SwitchStateChanged(object sender, RobotCtrl.SwitchEventArgs e)
         {
-            this.setState(e.SwitchEnabled ? SwitchState.ON : SwitchState.OFF);
+            if (InvokeRequired)
+            {
+
+                Invoke(new EventHandler<RobotCtrl.SwitchEventArgs>(Rswitch_SwitchStateChanged), sender, e);
+            }
+            else
+            {
+                this.setState(e.SwitchEnabled ? SwitchState.ON : SwitchState.OFF);
+            }
         }
 
         private enum SwitchState { ON, OFF }
