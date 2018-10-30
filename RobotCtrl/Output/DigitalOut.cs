@@ -19,7 +19,7 @@ namespace RobotCtrl
     {
 
         #region members
-        private int data;
+        private int _data;
         public event EventHandler DigitalOutputChanged;
         #endregion
 
@@ -33,10 +33,21 @@ namespace RobotCtrl
         public DigitalOut(int port)
         {
             Port = port;
-            data = 0;
+            _data = 0;
+            Initialize();
         }
         #endregion
 
+        /// <summary>
+        /// Initialisiert den Anfangszustand
+        /// </summary>
+        public void Initialize()
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                this[i] = false;
+            }
+        }
 
         #region properties
         /// <summary>
@@ -52,10 +63,15 @@ namespace RobotCtrl
         /// </summary>
         public int Data
         {
-            get { return data; }
-            set 
-            { 
-                // Todo 
+            get { return _data; }
+            set
+            {
+                int mask = (1 << 4) - 1;
+                if((value & mask) != (_data & mask))
+                {
+                    _data = value;
+                    OnDigitalOutputChanged(new EventArgs());
+                }
             }
         }
         #endregion
@@ -68,10 +84,7 @@ namespace RobotCtrl
         /// <param name="e"></param>
         protected void OnDigitalOutputChanged(EventArgs e)
         {
-            if (DigitalOutputChanged != null)
-            {
-                DigitalOutputChanged(this, e);
-            }
+            DigitalOutputChanged?.Invoke(this, e);
         }
 
 
@@ -83,8 +96,29 @@ namespace RobotCtrl
         /// <returns>den aktuellen Zustand des Bits</returns>
         public virtual bool this[int bit]
         {
-            get { return false; /* ToDo */  }
-            set { /* ToDo */ }
+            get
+            {
+                int data = IOPort.Read(this.Port);
+                int mask = (1 << bit);
+                return (mask & data) == mask;
+            }
+            set
+            {
+                int newData = Data;
+                if(value)
+                {
+                    int mask = (1 << bit);
+                    newData |= mask;
+                }
+                else
+                {
+                    int mask = ~(1 << bit);
+                    newData &= mask;
+                }
+
+                IOPort.Write(this.Port, newData);
+                this.Data = newData;
+            }
         }
         #endregion
     }
