@@ -156,7 +156,7 @@ namespace RobotCtrl
         /// Liefert den gefahrenden Weg [m].
         /// Dieser wird aus der Anzahl Ticks berechnet.
         /// </summary>
-        public virtual float Distance<
+        public virtual float Distance
         {
             get { return this.Ticks * Constants.MeterPerTick; }
         }
