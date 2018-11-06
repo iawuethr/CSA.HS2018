@@ -70,6 +70,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RobotIO\RobotIO.csproj">
+      <Project>{FC45B64A-8133-4408-8E5C-E20121C731D2}</Project>
+      <Name>RobotIO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RobotView\RobotView.csproj">
       <Project>{D86027D9-7A87-4400-AF37-B6D3B4CF42F4}</Project>
       <Name>RobotView</Name>

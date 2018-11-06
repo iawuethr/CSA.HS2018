@@ -37,10 +37,21 @@ namespace Testat
 
         private void LetLedBlink()
         {
-            _robot.RobotConsole[Leds.Led1].LedEnabled = !_robot.RobotConsole[Leds.Led1].LedEnabled & _isRunning;
-            _robot.RobotConsole[Leds.Led2].LedEnabled = !_robot.RobotConsole[Leds.Led1].LedEnabled & _isRunning;
-            _robot.RobotConsole[Leds.Led3].LedEnabled = !_robot.RobotConsole[Leds.Led1].LedEnabled & _isRunning;
-            _robot.RobotConsole[Leds.Led4].LedEnabled = !_robot.RobotConsole[Leds.Led1].LedEnabled & _isRunning;
+            bool newState = false;
+            while (_isRunning)
+            {
+                Thread.Sleep(500);
+                newState = !newState;
+                _robot.RobotConsole[Leds.Led1].LedEnabled = newState;
+                _robot.RobotConsole[Leds.Led2].LedEnabled = newState;
+                _robot.RobotConsole[Leds.Led3].LedEnabled = newState;
+                _robot.RobotConsole[Leds.Led4].LedEnabled = newState;
+            }
+
+            _robot.RobotConsole[Leds.Led1].LedEnabled = false;
+            _robot.RobotConsole[Leds.Led2].LedEnabled = false;
+            _robot.RobotConsole[Leds.Led3].LedEnabled = false;
+            _robot.RobotConsole[Leds.Led4].LedEnabled = false;
         }
 
         private void SwitchTwoChanged(object sender, SwitchEventArgs e)
@@ -93,6 +104,7 @@ namespace Testat
             // So that the led blinker and counter are able to stop..
             Thread.Sleep(100);
 
+            _robot.Drive.Stop();
             _ledBlinkThread.Abort();
             _counterThread.Abort();
             SetLabelText("Procedure was cancelled.");
