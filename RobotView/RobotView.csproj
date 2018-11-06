@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D86027D9-7A87-4400-AF37-B6D3B4CF42F4}</ProjectGuid>
+    <ProjectGuid>{8645B0CF-E4D2-429D-9A65-4CF20A925C40}</ProjectGuid>
     <ProjectTypeGuids>{6AFDAB0D-95EF-424D-8A49-099ECD40B0FF};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -43,23 +43,77 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonRunParameters.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonRunParameters.designer.cs">
+      <DependentUpon>CommonRunParameters.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConsoleView.cs">
       <SubType>usercontrol</SubType>
     </Compile>
     <Compile Include="ConsoleView.designer.cs">
       <DependentUpon>ConsoleView.cs</DependentUpon>
     </Compile>
-    <Compile Include="LEDView.cs">
-      <SubType>usercontrol</SubType>
+    <Compile Include="DriveCtrlView.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LEDView.designer.cs">
-      <DependentUpon>LEDView.cs</DependentUpon>
+    <Compile Include="DriveCtrlView.designer.cs">
+      <DependentUpon>DriveCtrlView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.Designer.cs">
+    <Compile Include="DriveView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DriveView.designer.cs">
+      <DependentUpon>DriveView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Images.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
+      <DependentUpon>Images.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LedView.cs">
+      <SubType>usercontrol</SubType>
+    </Compile>
+    <Compile Include="LedView.designer.cs">
+      <DependentUpon>LedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MotorCtrlView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MotorCtrlView.designer.cs">
+      <DependentUpon>MotorCtrlView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NumberKeyboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NumberKeyboard.designer.cs">
+      <DependentUpon>NumberKeyboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadarView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RadarView.designer.cs">
+      <DependentUpon>RadarView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RunArcView.cs">
+      <SubType>usercontrol</SubType>
+    </Compile>
+    <Compile Include="RunArcView.designer.cs">
+      <DependentUpon>RunArcView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RunLineView.cs">
+      <SubType>usercontrol</SubType>
+    </Compile>
+    <Compile Include="RunLineView.designer.cs">
+      <DependentUpon>RunLineView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RunTurnView.cs">
+      <SubType>usercontrol</SubType>
+    </Compile>
+    <Compile Include="RunTurnView.designer.cs">
+      <DependentUpon>RunTurnView.cs</DependentUpon>
     </Compile>
     <Compile Include="SwitchView.cs">
       <SubType>usercontrol</SubType>
@@ -70,30 +124,63 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobotCtrl\RobotCtrl.csproj">
-      <Project>{901104EF-B07B-434F-8025-9F922D7A49A7}</Project>
+      <Project>{2D039C34-69DC-4E62-B248-8875F466AA8B}</Project>
       <Name>RobotCtrl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CommonRunParameters.resx">
+      <DependentUpon>CommonRunParameters.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConsoleView.resx">
       <DependentUpon>ConsoleView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LEDView.resx">
-      <DependentUpon>LEDView.cs</DependentUpon>
+    <EmbeddedResource Include="DriveCtrlView.resx">
+      <DependentUpon>DriveCtrlView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resource.resx">
+    <EmbeddedResource Include="DriveView.resx">
+      <DependentUpon>DriveView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LedView.resx">
+      <DependentUpon>LedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MotorCtrlView.resx">
+      <DependentUpon>MotorCtrlView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NumberKeyboard.resx">
+      <DependentUpon>NumberKeyboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RadarView.resx">
+      <DependentUpon>RadarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunArcView.resx">
+      <DependentUpon>RunArcView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunLineView.resx">
+      <DependentUpon>RunLineView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunTurnView.resx">
+      <DependentUpon>RunTurnView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SwitchView.resx">
       <DependentUpon>SwitchView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\LedOff.bmp" />
-    <Content Include="Resources\LedOn.bmp" />
-    <Content Include="Resources\SwitchOff.bmp" />
-    <Content Include="Resources\SwitchOn.bmp" />
+    <None Include="Resources\LedOff.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LedOn.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwitchOff.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwitchOn.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkTargetsVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

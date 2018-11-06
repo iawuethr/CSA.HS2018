@@ -5,58 +5,68 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using RobotCtrl;
 
 namespace RobotView
 {
-    public partial class LEDView : UserControl
+    public partial class LedView : UserControl
     {
-        private LEDState state = LEDState.OFF;
-        private RobotCtrl.Led LED;
-
-        private void setLEDState(LEDState state)
+        private bool state;
+        public bool State
         {
-            this.state = state;
-            switch (this.state)
+            get
             {
-                case LEDState.ON:
-                    PictureLED.Image = Resource.LedOn;
-                    break;
-                case LEDState.OFF:
-                    PictureLED.Image = Resource.LedOff;
-                    break;
-                default:
-                    throw new ArgumentException("Tried to set LED to invalid state.");
+                return state;
+            }
+
+            set
+            {
+                state = value;
+                if (state == true)
+                {
+                    // pictureBox1.Image = Images.LedOn;
+                    pictureBox1.Invoke(new Action(changeImageOn));
+                }
+                else
+                {
+                    // pictureBox1.Image = Images.LedOff;
+                    pictureBox1.Invoke(new Action(changeImageOff));
+                }
+                
+            }
+        }
+        public void changeImageOn()
+        {
+            pictureBox1.Image = Images.LedOn;
+        }
+        public void changeImageOff()
+        {
+            pictureBox1.Image = Images.LedOff;
+        }
+
+        public Led Led
+        {
+            get
+            {
+                return led;
+            }
+
+            set
+            {
+                led = value;
+                if (value != null)
+                {
+                    led.LedStateChanged += (sender, e) => State = e.LedEnabled;
+                }
             }
         }
 
-        public void setLED(RobotCtrl.Led led)
-        {
-            this.LED = led;
-            led.LedStateChanged += Led_LedStateChanged;
-        }
-
-        private void Led_LedStateChanged(object sender, RobotCtrl.LedEventArgs e)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new EventHandler<RobotCtrl.LedEventArgs>(Led_LedStateChanged), sender, e);
-            }
-            else
-            {
-                this.setLEDState(e.LedEnabled ? LEDState.ON : LEDState.OFF);
-            }
-        }
-
-        private LEDState getLEDState()
-        {
-            return this.state;
-        }
-
-        public LEDView()
+        private Led led;
+        public LedView()
         {
             InitializeComponent();
+            State = false;
         }
 
-        private enum LEDState { ON, OFF }
     }
 }

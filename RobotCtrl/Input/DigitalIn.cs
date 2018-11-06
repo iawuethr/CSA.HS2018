@@ -15,7 +15,7 @@ namespace RobotCtrl
 
     /// <summary>
     /// Mit Hilfe diese Klasse kann auf die 4 Eingänge (Schalter) des Roboters zugegeriffen werden.
-    /// </summary   >
+    /// </summary>
     public class DigitalIn : IDisposable
     {
         #region members
@@ -69,8 +69,10 @@ namespace RobotCtrl
         /// </summary>
         public int Data
         {
-            get {
-                return IOPort.Read(this.Port);
+            get
+            {
+
+               return IOPort.Read(Port); /* ToDo */
             }
         }
         #endregion
@@ -97,14 +99,7 @@ namespace RobotCtrl
         /// <returns>den Zustand des entsprechenden Input-Bits.</returns>
         public virtual bool this[int bit]
         {
-            get {
-                int mask = 1 << bit;
-                return (this.Data & mask) == mask;
-            }
-            set
-            {
-                IOPort.Write(this.Port, value ? this.Data | (1 << bit) : this.Data & ~(1 << bit));
-            }
+            get { return Convert.ToBoolean(Data & (1 << bit)); /* ToDo */ }
         }
 
         /// <summary>
@@ -113,16 +108,37 @@ namespace RobotCtrl
         /// </summary>
         private void Run()
         {
+            
             int oldData = -1;
             int newData;
             run = true;
             while (run)
             {
-                newData = this.Data;
-                if (newData != oldData) {
-                   this.OnDigitalInChanged(new EventArgs());
+
+                newData = Data;
+
+                if(newData != oldData)
+                {
+                    OnDigitalInChanged(EventArgs.Empty);
+                    oldData = newData;
+                    //for (var i = 0; i < 4; i++)
+                    //{
+                    //    var get = Convert.ToBoolean(oldData & (1 << i));
+
+                    //    if (this[i] != get)
+                    //    {
+                    //        //  get = this[i];
+                    //        //var switches = Enum.Parse(typeof(Switches), "Switches.Switch" + (1 + i), true);
+                    //        //OnDigitalInChanged(new SwitchEventArgs((Switches)switches, this[i]));
+                    //    }
+                    //}
                 }
-                oldData = this.Data;
+
+
+                // Todo: Port des Roboters pollen.
+                // Falls eine Änderung detektiert wird, das Event DigitalInChanged feuern.
+
+
                 Thread.Sleep(50);
             }
         }

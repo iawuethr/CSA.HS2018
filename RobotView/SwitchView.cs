@@ -5,53 +5,73 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using RobotCtrl;
+
 
 namespace RobotView
 {
     public partial class SwitchView : UserControl
     {
-        private SwitchState state = SwitchState.OFF;
-        private RobotCtrl.Switch rswitch;
+        private bool state;
+        public bool State
+        {
+            get
+            {
+                return state;
+            }
+
+            set
+            {
+                state = value;
+                if (state == true)
+                {
+                    // pictureBox1.Image = Images.SwitchOn;  
+                    pictureBox1.Invoke(new Action(changeImageOn));
+                }
+                else
+                {
+                    // pictureBox1.Image = Images.SwitchOff;
+                    pictureBox1.Invoke(new Action(changeImageOff));
+                }
+                
+            }
+        }
+        public void changeImageOn()
+        {
+            pictureBox1.Image = Images.SwitchOn;
+        }
+        public void changeImageOff()
+        {
+            pictureBox1.Image = Images.SwitchOff;
+        }
+
+
+        public Switch Schalter
+        {
+            get
+            {
+                return schalter;
+            }
+
+            set
+            {
+                schalter = value;
+                if (value != null)
+                {
+                    schalter.SwitchStateChanged += (sender, e) => State = e.SwitchEnabled;
+                    
+                }
+            }
+        }
+
+        private Switch schalter;
+
         public SwitchView()
         {
             InitializeComponent();
+            State = false;
         }
 
-        private void setState(SwitchState state)
-        {
-            this.state = state;
-            switch (this.state)
-            {
-                case SwitchState.ON:
-                    pictureBox.Image = Resource.SwitchOn;
-                    break;
-                case SwitchState.OFF:
-                    pictureBox.Image = Resource.SwitchOff;
-                    break;
-                default:
-                    throw new ArgumentException("Tried to set Switch to illegal state.");
-            }
-        }
-
-        public void setSwitch(RobotCtrl.Switch rswitch)
-        {
-            this.rswitch = rswitch;
-            rswitch.SwitchStateChanged += Rswitch_SwitchStateChanged;
-        }
-
-        private void Rswitch_SwitchStateChanged(object sender, RobotCtrl.SwitchEventArgs e)
-        {
-            if (InvokeRequired)
-            {
-
-                Invoke(new EventHandler<RobotCtrl.SwitchEventArgs>(Rswitch_SwitchStateChanged), sender, e);
-            }
-            else
-            {
-                this.setState(e.SwitchEnabled ? SwitchState.ON : SwitchState.OFF);
-            }
-        }
-
-        private enum SwitchState { ON, OFF }
+        
     }
 }

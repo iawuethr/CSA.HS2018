@@ -1,11 +1,18 @@
+using System.Windows.Forms;
+
 namespace RobotView
 {
-    partial class LEDView
+    partial class LedView : UserControl
     {
+        private System.Windows.Forms.PictureBox pictureBox1;
         /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        //private bool State = false;
+
+        
+      
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -19,6 +26,7 @@ namespace RobotView
             base.Dispose(disposing);
         }
 
+
         #region Component Designer generated code
 
         /// <summary> 
@@ -27,25 +35,24 @@ namespace RobotView
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LEDView));
-            this.PictureLED = new System.Windows.Forms.PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LedView));
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.SuspendLayout();
             // 
-            // PictureLED
+            // pictureBox1
             // 
-            this.PictureLED.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PictureLED.Image = ((System.Drawing.Image)(resources.GetObject("PictureLED.Image")));
-            this.PictureLED.Location = new System.Drawing.Point(0, 0);
-            this.PictureLED.Name = "PictureLED";
-            this.PictureLED.Size = new System.Drawing.Size(20, 20);
-            this.PictureLED.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
             // 
-            // LEDView
+            // LedView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.PictureLED);
-            this.Name = "LEDView";
+            this.Controls.Add(this.pictureBox1);
+            this.Name = "LedView";
             this.Size = new System.Drawing.Size(20, 20);
             this.ResumeLayout(false);
 
@@ -53,6 +60,7 @@ namespace RobotView
 
         #endregion
 
-        private System.Windows.Forms.PictureBox PictureLED;
+       
+ 
     }
 }

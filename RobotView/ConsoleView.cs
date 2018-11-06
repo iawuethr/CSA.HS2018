@@ -5,32 +5,40 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using RobotCtrl;
 
 namespace RobotView
 {
     public partial class ConsoleView : UserControl
     {
-        private RobotCtrl.RobotConsole console = new RobotCtrl.RobotConsole();
+        private RobotConsole roboCo;
+        public RobotConsole RoboCo
+        {
+            get
+            {
+                return roboCo;
+            }
+
+            set
+            {
+                roboCo = value;
+                ledView1.Led = roboCo[Leds.Led1];
+                ledView2.Led = roboCo[Leds.Led2];
+                ledView3.Led = roboCo[Leds.Led3];
+                ledView4.Led = roboCo[Leds.Led4];
+                switchView1.Schalter = roboCo[Switches.Switch1];
+                switchView2.Schalter = roboCo[Switches.Switch2];
+                switchView3.Schalter = roboCo[Switches.Switch3];
+                switchView4.Schalter = roboCo[Switches.Switch4];
+                
+            }
+        }
+
         public ConsoleView()
         {
             InitializeComponent();
-
-
         }
 
-        public void setConsole(RobotCtrl.RobotConsole console)
-        {
-            this.console = console;
-
-            this.ledView0.setLED(console[RobotCtrl.Leds.Led1]);
-            this.ledView1.setLED(console[RobotCtrl.Leds.Led2]);
-            this.ledView2.setLED(console[RobotCtrl.Leds.Led3]);
-            this.ledView3.setLED(console[RobotCtrl.Leds.Led4]);
-
-            this.switchView0.setSwitch(console[RobotCtrl.Switches.Switch1]);
-            this.switchView1.setSwitch(console[RobotCtrl.Switches.Switch2]);
-            this.switchView2.setSwitch(console[RobotCtrl.Switches.Switch3]);
-            this.switchView3.setSwitch(console[RobotCtrl.Switches.Switch4]);
-        }
+        
     }
 }

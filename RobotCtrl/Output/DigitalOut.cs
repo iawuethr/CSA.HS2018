@@ -19,7 +19,7 @@ namespace RobotCtrl
     {
 
         #region members
-        private int _data;
+        private int data;
         public event EventHandler DigitalOutputChanged;
         #endregion
 
@@ -33,21 +33,10 @@ namespace RobotCtrl
         public DigitalOut(int port)
         {
             Port = port;
-            _data = 0;
-            Initialize();
+            data = 0;
         }
         #endregion
 
-        /// <summary>
-        /// Initialisiert den Anfangszustand
-        /// </summary>
-        public void Initialize()
-        {
-            for(int i = 0; i < 4; i++)
-            {
-                this[i] = false;
-            }
-        }
 
         #region properties
         /// <summary>
@@ -63,15 +52,38 @@ namespace RobotCtrl
         /// </summary>
         public int Data
         {
-            get { return _data; }
-            set
+            get { return data; }
+            set 
             {
-                int mask = (1 << 4) - 1;
-                if((value & mask) != (_data & mask))
+                if (data != value)
                 {
-                    _data = value;
-                    OnDigitalOutputChanged(new EventArgs());
+                    data = value;
+                    OnDigitalOutputChanged(EventArgs.Empty);
+                    IOPort.Write(Port, data);
                 }
+                //for (var i = 0; i < 4; i++)
+                //{
+                //    var set = Convert.ToBoolean(value & (1 << i));
+
+                //    if (this[i] != set)
+                //        //check, ob sich ein Bit verändert hat und nicht der ganzen Wert(alle 4 Bits)
+                //    {
+                //        this[i] = set; // Wert zuweisen ins data-Property
+
+
+                //        var leds = Enum.Parse(typeof(Leds), "Leds.Led" + (1 + i), true);
+
+
+                //        OnDigitalOutputChanged(new LedEventArgs((Leds)leds, this[i]));
+                //        OnDigitalOutputChanged(new LedEventArgs(Leds.Led1, this[i]));
+
+
+                //    }
+
+                //}
+                
+
+
             }
         }
         #endregion
@@ -84,7 +96,10 @@ namespace RobotCtrl
         /// <param name="e"></param>
         protected void OnDigitalOutputChanged(EventArgs e)
         {
-            DigitalOutputChanged?.Invoke(this, e);
+            if (DigitalOutputChanged != null)
+            {
+                DigitalOutputChanged(this, e);
+            }
         }
 
 
@@ -98,28 +113,27 @@ namespace RobotCtrl
         {
             get
             {
-                int data = IOPort.Read(this.Port);
-                int mask = (1 << bit);
-                return (mask & data) == mask;
+                return (data & (1 << bit)) !=0;
+                //return Convert.ToBoolean(Data & (1 << bit));
+                //return this[bit];
             }
             set
             {
-                int newData = Data;
-                if(value)
+                if (value)
                 {
-                    int mask = (1 << bit);
-                    newData |= mask;
+                    // Bit setzen
+                    Data |= (1 << bit);
+                    //Data = Convert.ToInt32(Data | (1 << bit));
                 }
                 else
                 {
-                    int mask = ~(1 << bit);
-                    newData &= mask;
+                    // Bit löschen
+                    Data &= ~ (1 << bit);
+                    //Data = Convert.ToInt32(Data & (1 << bit));
                 }
-
-                IOPort.Write(this.Port, newData);
-                this.Data = newData;
+                //Data ^= (-Convert.ToInt32(value) ^ Data) & (1 << bit);
             }
-        }
+       }
         #endregion
     }
 }
