@@ -28,9 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.radarView1 = new RobotView.RadarView();
             this.label1 = new System.Windows.Forms.Label();
+            this.radarView1 = new RobotView.RadarView();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(5, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(989, 34);
+            this.label1.Text = "Ready...";
             // 
             // radarView1
             // 
@@ -39,13 +46,6 @@
             this.radarView1.Radar = null;
             this.radarView1.Size = new System.Drawing.Size(989, 74);
             this.radarView1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(5, 83);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(989, 34);
-            this.label1.Text = "Counting...";
             // 
             // Form1
             // 

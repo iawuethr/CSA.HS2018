@@ -15,7 +15,7 @@ namespace Testat
     {
         private Robot _robot = new Robot();
         private bool _isRunning = false;
-        private bool _isCountain = false;
+        private bool _isCounting = false;
         private Thread _ledBlinkThread;
         private Thread _counterThread;
         private Thread _workerThread;
@@ -70,26 +70,41 @@ namespace Testat
 
         private void Count()
         {
-            _isCountain = true;
+            int measuredDCount = 5b0;
+            Queue<float> measuredDists = new Queue<float>() ;
+            _isCounting = true;
             // Let the LED blinking
             _ledBlinkThread = new Thread(LetLedBlink);
             _ledBlinkThread.Start();
-
+            SetLabelText("Counting...");
             float last = -(_margin + 0.01f);
             _count = 0;
+            int walk = 0;
+            float current = _robot.Radar.Distance;
+            for (int i = 0; i < measuredDCount; i++)
+            {
+                measuredDists.Enqueue(current);
+            }
             while (_isRunning)
             {
-                float current = _robot.Radar.Distance;
-
-                if (_isCountain && (last - current <= -_margin || last - current >= _margin))
+                walk++;
+                measuredDists.Enqueue(_robot.Radar.Distance);
+                if (measuredDists.Count > (measuredDCount + 1))
+                {
+                    measuredDists.Dequeue();
+                }
+                current = measuredDists.OrderByDescending(i => i).ToArray()[measuredDCount / 2];
+                if (_isCounting && (walk >= measuredDCount) && (last - current <= -_margin || last - current >= _margin))
                 {
                     last = current;
                     if (current <= 1)
                     {
                         _count++;
-                        SetLabelText("Number of objects counted: " + _count);
+                        SetLabelText("Current count: " + _count);
                     }
+                    walk = 0;
                 }
+                Thread.Sleep(10);
             }
         }
 
@@ -113,7 +128,7 @@ namespace Testat
             _robot.Drive.Stop();
             _ledBlinkThread.Abort();
             _counterThread.Abort();
-            SetLabelText("Procedure was cancelled.");
+            
         }
 
         private void WaitDriveDone(int intervalWait)
@@ -136,19 +151,28 @@ namespace Testat
             _counterThread = new Thread(Count);
             _counterThread.Start();
 
-            _robot.Drive.RunLine(2.5f, 0.3f, 0.5f);
-
-            WaitDriveDone(500);
-            _isCountain = false;
-            Thread.Sleep(10);
-            _robot.Drive.RunTurn(180f, 0.3f, 0.5f);
-            _isCountain = true;
-            Thread.Sleep(10);
+            _robot.Drive.RunLine(2.5f, 0.1f, 0.5f);
             WaitDriveDone(500);
 
-            _robot.Drive.RunLine(2.5f, 0.3f, 0.5f);
+            _isCounting = false;
+            Thread.Sleep(10);
+            _robot.Drive.RunTurn(180f, 0.1f, 0.5f);
+            WaitDriveDone(500);
+            Thread.Sleep(10);
+            _isCounting = true;
+            Thread.Sleep(10);
 
+            _robot.Drive.RunLine(2.5f, 0.1f, 0.5f);
+            WaitDriveDone(500);
+
+            _isCounting = false;
+            Thread.Sleep(10);
+            _robot.Drive.RunTurn(180f, 0.1f, 0.5f);
+            WaitDriveDone(500);
+            Thread.Sleep(10);
             _isRunning = false;
+
+            SetLabelText("Number of objects counted: " + _count);
         }
 
         private void SetLabelText(string text)
