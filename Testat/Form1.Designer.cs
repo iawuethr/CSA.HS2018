@@ -31,6 +31,7 @@
         {
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.radarView1 = new RobotView.RadarView();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // radarView1
@@ -41,12 +42,20 @@
             this.radarView1.Size = new System.Drawing.Size(989, 74);
             this.radarView1.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(5, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(989, 34);
+            this.label1.Text = "Counting...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1006, 455);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.radarView1);
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
@@ -58,6 +67,7 @@
         #endregion
 
         private RobotView.RadarView radarView1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
