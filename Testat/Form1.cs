@@ -15,10 +15,11 @@ namespace Testat
     {
         private Robot _robot = new Robot();
         private bool _isRunning = false;
+        private bool _isCountain = false;
         private Thread _ledBlinkThread;
         private Thread _counterThread;
         private Thread _workerThread;
-        private readonly float _margin = 0.05f;
+        private readonly float _margin = 0.20f;
         private int _count;
 
         public Form1()
@@ -69,6 +70,7 @@ namespace Testat
 
         private void Count()
         {
+            _isCountain = true;
             // Let the LED blinking
             _ledBlinkThread = new Thread(LetLedBlink);
             _ledBlinkThread.Start();
@@ -79,12 +81,13 @@ namespace Testat
             {
                 float current = _robot.Radar.Distance;
 
-                if ((last - current <= -_margin || last - current >= _margin))
+                if (_isCountain && (last - current <= -_margin || last - current >= _margin))
                 {
                     last = current;
                     if (current <= 1)
                     {
                         _count++;
+                        SetLabelText("Number of objects counted: " + _count);
                     }
                 }
             }
@@ -129,7 +132,6 @@ namespace Testat
 
         private void DoWork()
         {
-            SetLabelText("Is counting...");
             // Let the counter start counting
             _counterThread = new Thread(Count);
             _counterThread.Start();
@@ -137,16 +139,16 @@ namespace Testat
             _robot.Drive.RunLine(2.5f, 0.3f, 0.5f);
 
             WaitDriveDone(500);
-
+            _isCountain = false;
+            Thread.Sleep(10);
             _robot.Drive.RunTurn(180f, 0.3f, 0.5f);
-
+            _isCountain = true;
+            Thread.Sleep(10);
             WaitDriveDone(500);
 
             _robot.Drive.RunLine(2.5f, 0.3f, 0.5f);
 
             _isRunning = false;
-
-            SetLabelText("Number of objects counted: " + _count);
         }
 
         private void SetLabelText(string text)
