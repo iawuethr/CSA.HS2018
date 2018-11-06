@@ -79,10 +79,13 @@ namespace Testat
             {
                 float current = _robot.Radar.Distance;
 
-                if (current <= 1 && (last - current <= -_margin || last - current >= _margin))
+                if ((last - current <= -_margin || last - current >= _margin))
                 {
                     last = current;
-                    _count++;
+                    if (current <= 1)
+                    {
+                        _count++;
+                    }
                 }
             }
         }
