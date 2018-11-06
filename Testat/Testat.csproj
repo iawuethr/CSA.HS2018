@@ -4,18 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{901104EF-B07B-434F-8025-9F922D7A49A7}</ProjectGuid>
+    <ProjectGuid>{592F8726-8492-4A25-993D-2518ECFC16C0}</ProjectGuid>
     <ProjectTypeGuids>{6AFDAB0D-95EF-424D-8A49-099ECD40B0FF};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RobotCtrl</RootNamespace>
-    <AssemblyName>RobotCtrl</AssemblyName>
+    <RootNamespace>Testat</RootNamespace>
+    <AssemblyName>Testat</AssemblyName>
     <TargetFrameworkIdentifier>WindowsEmbeddedCompact</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.9</TargetFrameworkVersion>
     <TargetFrameworkTargetsVersion>v8.0</TargetFrameworkTargetsVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +26,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,37 +35,45 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RobotCtrl">
+      <HintPath>..\RobotCtrl\bin\Debug\RobotCtrl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="Drive\Drive.cs" />
-    <Compile Include="Drive\DriveInfo.cs" />
-    <Compile Include="Drive\Track.cs" />
-    <Compile Include="Drive\TrackArcLeft.cs" />
-    <Compile Include="Drive\TrackArcRight.cs" />
-    <Compile Include="Drive\TrackLine.cs" />
-    <Compile Include="Drive\TrackTurn.cs" />
-    <Compile Include="Engine\DriveCtrl.cs" />
-    <Compile Include="Engine\MotorCtrl.cs" />
-    <Compile Include="Input\DigitalIn.cs" />
-    <Compile Include="Input\Switch.cs" />
-    <Compile Include="Input\SwitchEventArgs.cs" />
-    <Compile Include="IOPort.cs" />
-    <Compile Include="Output\DigitalOut.cs" />
-    <Compile Include="Output\Led.cs" />
-    <Compile Include="Output\LedEventArgs.cs" />
-    <Compile Include="PositionInfo.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Radar\Radar.cs" />
-    <Compile Include="Robot.cs" />
-    <Compile Include="RobotConsole.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RobotView\RobotView.csproj">
+      <Project>{D86027D9-7A87-4400-AF37-B6D3B4CF42F4}</Project>
+      <Name>RobotView</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkTargetsVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
